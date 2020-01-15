@@ -8,11 +8,14 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Text countText;
     public Text winText;
+    AudioSource audio;
+
 
     private Rigidbody rb;
     private int count;
 
     void Start(){
+        audio = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         count = 0;
         SetCountText();
@@ -24,12 +27,20 @@ public class PlayerController : MonoBehaviour
 
         Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
 
+        if (Input.GetKeyDown("space") && rb.transform.position.y <= 0.5f)
+        {
+            Vector3 jump = new Vector3(0.0f, 200.0f, 0.0f);
+
+            rb.AddForce(jump);
+        }
+
         rb.AddForce(movement*speed);
     }
     void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag ("Pick Up"))
         {
+            audio.Play();
             other.gameObject.SetActive (false);
             count++;
             SetCountText();
