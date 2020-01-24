@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class PlayerController : MonoBehaviour
 {
     public float speed;
@@ -12,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
 
     private Rigidbody rb;
-    private int count;
+    public int count;
 
     void Start(){
         audio = GetComponent<AudioSource>();
@@ -46,6 +48,9 @@ public class PlayerController : MonoBehaviour
             SetCountText();
         }
     }
+    // void IncrimentCount(){
+    //     count++;
+    // }
     void SetCountText ()
     {
         countText.text = "Count: " + count.ToString ();

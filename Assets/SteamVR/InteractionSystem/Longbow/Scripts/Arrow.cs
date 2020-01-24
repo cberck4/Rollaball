@@ -6,6 +6,7 @@
 
 using UnityEngine;
 using System.Collections;
+// using PlayerControllerNamespace.PlayerController;
 
 namespace Valve.VR.InteractionSystem
 {
@@ -111,16 +112,20 @@ namespace Valve.VR.InteractionSystem
 
 
 		//-------------------------------------------------
+
 		void OnTriggerEnter(Collider other) 
     	{
         if (other.gameObject.CompareTag ("Pick Up"))
         {
             // audio.Play();
             other.gameObject.SetActive (false);
+			GameObject.FindGameObjectsWithTag("Pick Up");
             // count++;
             // SetCountText();
+			
         }
     	}
+		
 		void OnCollisionEnter( Collision collision )
 		{
 			if ( inFlight )
