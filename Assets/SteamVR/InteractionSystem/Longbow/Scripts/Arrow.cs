@@ -111,6 +111,16 @@ namespace Valve.VR.InteractionSystem
 
 
 		//-------------------------------------------------
+		void OnTriggerEnter(Collider other) 
+    	{
+        if (other.gameObject.CompareTag ("Pick Up"))
+        {
+            // audio.Play();
+            other.gameObject.SetActive (false);
+            // count++;
+            // SetCountText();
+        }
+    	}
 		void OnCollisionEnter( Collision collision )
 		{
 			if ( inFlight )
@@ -119,6 +129,7 @@ namespace Valve.VR.InteractionSystem
 				float rbSpeed = rb.velocity.sqrMagnitude;
 				bool canStick = ( targetPhysMaterial != null && collision.collider.sharedMaterial == targetPhysMaterial && rbSpeed > 0.2f );
 				bool hitBalloon = collision.collider.gameObject.GetComponent<Balloon>() != null;
+				bool hitPickUp = (collision.collider.gameObject.tag == "Pick Up");
 
 				if ( travelledFrames < 2 && !canStick )
 				{
@@ -165,6 +176,10 @@ namespace Valve.VR.InteractionSystem
 						collision.collider.gameObject.SendMessageUpwards( "ApplyDamage", SendMessageOptions.DontRequireReceiver );
 						gameObject.SendMessage( "HasAppliedDamage", SendMessageOptions.DontRequireReceiver );
 					}
+				}
+
+				if (hitPickUp){
+					Destroy(collision.collider.gameObject);
 				}
 
 				if ( hitBalloon )
